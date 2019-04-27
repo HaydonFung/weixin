@@ -1,5 +1,5 @@
 # !/bin/bash
-cd weixin
+cd test_wx
 mvn spring-boot:stop
 cd ../subscribe
 mvn spring-boot:stop
