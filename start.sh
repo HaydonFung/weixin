@@ -5,5 +5,5 @@
 mvn install
 cd test_wx
 mvn spring-boot:start
-cd ../subscrible
+cd ../subscribe
 mvn spring-boot:start
