@@ -24,7 +24,7 @@
 	</properties>
 		<modules>
 			<module>test_wx</module>
-			<module>subscrible</module>
+			<module>subscribe</module>
 			<module>commons</module>
 		</modules>
 </project>
