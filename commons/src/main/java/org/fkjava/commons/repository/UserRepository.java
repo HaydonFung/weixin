@@ -1,4 +1,4 @@
-package org.fkjava.weixin.repository;
+package org.fkjava.commons.repository;
 
 import org.fkjava.commons.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

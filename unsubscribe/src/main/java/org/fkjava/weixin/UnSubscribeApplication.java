@@ -23,11 +23,11 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 @ComponentScan(basePackages = "org.fkjava")
 @EnableJpaRepositories(basePackages = "org.fkjava")
 @EntityScan(basePackages = "org.fkjava")
-public class SubscribeApplication implements ApplicationContextAware
+public class UnSubscribeApplication implements ApplicationContextAware
 // 为了让非WEB应用能够一直等待信息的到来，必须实现CommandLineRunner接口
 		, EventListenerConfig {
 
-	private static final Logger LOG = LoggerFactory.getLogger(SubscribeApplication.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UnSubscribeApplication.class);
 	private ApplicationContext ctx;
 
 	// 这个方法，会在当前实例创建之后，由Spring自己调用，而Spring会把它本身传入进来
@@ -59,6 +59,6 @@ public class SubscribeApplication implements ApplicationContextAware
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(SubscribeApplication.class, args);
+		SpringApplication.run(UnSubscribeApplication.class, args);
 	}
 }

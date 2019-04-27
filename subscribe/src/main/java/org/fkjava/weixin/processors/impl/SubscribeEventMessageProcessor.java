@@ -3,7 +3,7 @@ package org.fkjava.weixin.processors.impl;
 import org.fkjava.commons.domain.User;
 import org.fkjava.commons.domain.event.EventInMessage;
 import org.fkjava.commons.processor.EventMessageProcessor;
-import org.fkjava.weixin.repository.UserRepository;
+import org.fkjava.commons.repository.UserRepository;
 import org.fkjava.weixin.service.WeiXinProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
