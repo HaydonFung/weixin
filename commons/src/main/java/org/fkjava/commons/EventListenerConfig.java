@@ -90,7 +90,7 @@ public interface EventListenerConfig extends CommandLineRunner, DisposableBean {
 		c.setConnectionFactory(connectionFactory);
 
 		// 订阅event消息，当队列中有event消息我们就可以收到
-		ChannelTopic topic = new ChannelTopic("kemao_3_event");
+		ChannelTopic topic = new ChannelTopic("kemao_3_fz_event");
 
 		// 使用匿名内部类实现一个监听器
 //			MessageListener listener = new MessageListener() {
