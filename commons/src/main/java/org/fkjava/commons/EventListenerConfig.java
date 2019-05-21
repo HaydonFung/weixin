@@ -1,5 +1,6 @@
 package org.fkjava.commons;
 
+import org.fkjava.commons.domain.AccessToken;
 import org.fkjava.commons.domain.InMessage;
 import org.fkjava.commons.domain.event.EventInMessage;
 import org.fkjava.commons.service.JsonRedisSerializer;
@@ -64,6 +65,17 @@ public interface EventListenerConfig extends CommandLineRunner, DisposableBean {
 		return template;
 	}
 
+	// 最终把令牌存储到Redis里面、从Redis里面获取令牌都是通过这个模板来实现的
+	@Bean
+	public default RedisTemplate<String, AccessToken> accessTokenTemplate(//
+			@Autowired RedisConnectionFactory connectionFactory) {
+		RedisTemplate<String, AccessToken> template = new RedisTemplate<>();
+		template.setConnectionFactory(connectionFactory);
+		template.setValueSerializer(jsonRedisSerializer());
+
+		return template;
+	}
+
 	@Bean
 	public default JsonRedisSerializer<InMessage> jsonRedisSerializer() {
 		return new JsonRedisSerializer<InMessage>();
@@ -78,7 +90,7 @@ public interface EventListenerConfig extends CommandLineRunner, DisposableBean {
 		c.setConnectionFactory(connectionFactory);
 
 		// 订阅event消息，当队列中有event消息我们就可以收到
-		ChannelTopic topic = new ChannelTopic("fengzhe_event");
+		ChannelTopic topic = new ChannelTopic("kemao_3_event");
 
 		// 使用匿名内部类实现一个监听器
 //			MessageListener listener = new MessageListener() {
@@ -100,7 +112,7 @@ public interface EventListenerConfig extends CommandLineRunner, DisposableBean {
 
 			// 强制转换，然后根据消息的事件类型，执行不同的业务
 			EventInMessage event = (EventInMessage) msg;
-			
+
 			handleEvent(event);
 
 //			LOG.trace("事件处理程序收到的消息：{}", msg);
@@ -120,6 +132,6 @@ public interface EventListenerConfig extends CommandLineRunner, DisposableBean {
 
 		return c;
 	}
-	
+
 	public void handleEvent(EventInMessage event);
 }

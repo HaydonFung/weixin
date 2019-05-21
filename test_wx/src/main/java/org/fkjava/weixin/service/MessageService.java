@@ -1,9 +1,9 @@
 package org.fkjava.weixin.service;
 
 import org.fkjava.commons.domain.InMessage;
-import org.fkjava.commons.domain.OUtMessage;
+import org.fkjava.commons.domain.OutMessage;
 
 public interface MessageService {
 
-	OUtMessage onMessage(InMessage msg);
+	OutMessage onMessage(InMessage msg);
 }

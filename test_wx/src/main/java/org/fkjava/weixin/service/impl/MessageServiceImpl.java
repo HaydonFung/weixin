@@ -1,7 +1,7 @@
 package org.fkjava.weixin.service.impl;
 
 import org.fkjava.commons.domain.InMessage;
-import org.fkjava.commons.domain.OUtMessage;
+import org.fkjava.commons.domain.OutMessage;
 import org.fkjava.weixin.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ public class MessageServiceImpl implements MessageService {
 	private RedisTemplate<String, ? extends InMessage> inMessageTemplate;
 
 	@Override
-	public OUtMessage onMessage(InMessage msg) {
+	public OutMessage onMessage(InMessage msg) {
 		LOG.trace("转换后的消息对象：\n{}\n", msg);
 
 		// 第一个参数是通道，第二个参数是消息本身。

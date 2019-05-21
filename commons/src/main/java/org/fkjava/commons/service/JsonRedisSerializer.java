@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.fkjava.commons.domain.InMessage;
+import org.hibernate.type.SerializationException;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.SerializationException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,6 +24,9 @@ public class JsonRedisSerializer<T> extends Jackson2JsonRedisSerializer<T> {
 
 	@Override
 	public T deserialize(byte[] bytes) throws SerializationException {
+		if (bytes == null || bytes.length == 0) {
+			return null;
+		}
 		ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
 		DataInputStream in = new DataInputStream(bis);
 		try {

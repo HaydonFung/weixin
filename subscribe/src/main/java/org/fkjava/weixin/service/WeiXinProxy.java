@@ -1,14 +1,20 @@
 package org.fkjava.weixin.service;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpClient.Version;
 import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.charset.Charset;
+import java.util.concurrent.CompletableFuture;
 
+import org.fkjava.commons.domain.OutMessage;
 import org.fkjava.commons.domain.User;
+import org.fkjava.commons.domain.text.TextOutMessage;
+import org.fkjava.commons.service.TokenManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,10 @@ public class WeiXinProxy {
 	@Autowired
 	private TokenManager tokenManager;
 
+	private HttpClient client = HttpClient.newBuilder()//
+			.version(Version.HTTP_1_1)// 设置HTTP 1.1的协议版本
+			.build();
+
 	/**
 	 * 利用OpenID到微信的服务器里面获取用户信息
 	 * 
@@ -36,6 +46,7 @@ public class WeiXinProxy {
 	 * @return
 	 */
 	public User getWxUser(String openId) {
+		// 获取一个令牌
 		String accessToken = this.tokenManager.getToken();
 
 		String url = "https://api.weixin.qq.com/cgi-bin/user/info"//
@@ -45,9 +56,9 @@ public class WeiXinProxy {
 
 		// 1.创建HttpClient对象
 		// 在Java 11才内置了HttpClient，如果是早期JDK需要使用第三方的jar文件
-		HttpClient client = HttpClient.newBuilder()//
-				.version(Version.HTTP_1_1)// 设置HTTP 1.1的协议版本
-				.build();
+//		HttpClient client = HttpClient.newBuilder()//
+//				.version(Version.HTTP_1_1)// 设置HTTP 1.1的协议版本
+//				.build();
 
 		// 2.创建HttpRequest对象
 		HttpRequest request = HttpRequest.newBuilder(URI.create(url))//
@@ -62,7 +73,7 @@ public class WeiXinProxy {
 
 			// 4.把返回的JSON转换为Java对象
 			String json = response.body();// 响应体
-			
+
 			LOG.trace("获取用户信息的返回：\n{}", json);
 
 			if (json.indexOf("errcode") > 0) {
@@ -86,5 +97,36 @@ public class WeiXinProxy {
 	 * @param string 文本信息的内容
 	 */
 	public void sendText(String openId, String string) {
+
+		TextOutMessage text = new TextOutMessage(openId, string);
+		// 把返回消息转换为JSON，然后调用远程接口发送出去
+		send(text);
+	}
+
+	private void send(OutMessage msg) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(msg);
+			LOG.trace("发送信息信息的内容：\n{}", json);
+
+			String accessToken = this.tokenManager.getToken();
+			String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + accessToken;
+			HttpRequest request = HttpRequest.newBuilder(URI.create(url))//
+					// 把消息的内容，转换为JSON字符串，然后发送给微信
+					.POST(BodyPublishers.ofString(json, Charset.forName("UTF-8")))// 以POST方式发送请求
+					.build();
+//			HttpResponse<String> response = client.send(request, BodyHandlers.ofString(Charset.forName("UTF-8")));
+//			LOG.trace("发送信息信息的返回：\n{}", response.body());
+
+			// 异步发送请求
+			CompletableFuture<HttpResponse<String>> future = client.sendAsync(request,
+					BodyHandlers.ofString(Charset.forName("UTF-8")));
+			// 异步处理结果
+			future.thenAcceptAsync(response -> {
+				LOG.trace("发送信息信息的返回：\n{}", response.body());
+			});
+		} catch (IOException e) {
+			throw new RuntimeException("发送消息出现问题：" + e.getLocalizedMessage(), e);
+		}
 	}
 }
