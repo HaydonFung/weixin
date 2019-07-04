@@ -1,5 +1,12 @@
+#box{
+	width:600px;
+	height:900px;
+	margin:0px auto;
+	border: 1px solid #eee;
+}
 .item {
 	padding: 0px;
+	height:130px;
 }
 
 .item:hover {
@@ -15,19 +22,18 @@
 	display: inline;
 }
 
-.item .buttons {
+.item span {
+	background-color: #fff;
+	height:30px;
+	width:30px;
 	display: inline;
 	float: right;
-	padding-top: 5px;
-}
-
-.item .buttons span {
-	background-color: #fff;
 	border: 1px solid #eee;
-	padding: 5px 15px;
+	font-size:20px;
+	text-align: center;
 }
 
-.item .buttons span:hover {
+.item span:hover {
 	background-color: #eee;
 	cursor: pointer;
 }

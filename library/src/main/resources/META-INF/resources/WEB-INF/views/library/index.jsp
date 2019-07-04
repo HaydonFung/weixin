@@ -9,11 +9,15 @@
 <link href="/kemao_3_fz/library/css/main.css" rel="stylesheet"/>
 </head>
 <body>
+<div id="box">
+	<h1>图书馆首页</h1>
+	<hr/>
 	<form method="get">
 		<%-- param是EL表达式的内置对象，表示所有的请求参数 --%>
 		<%-- ${param.keyword }使用EL表达式把名为keyword的请求参数的值获取出来 --%>
 		<input name='keyword' value="${param.keyword }"/>
 		<button>搜索</button>
+		<br />
 	</form>
 	<!-- 这里应该要循环从服务器返回的数据 -->
 <%-- 	<%
@@ -34,11 +38,9 @@
 		<%-- book.name相当于是book.getName() --%>
 		<div class="item">
 			<img style="" alt="" src="/kemao_3_fz/library/images/${book.image }" />
+			<span onclick="document.location.href='/kemao_3_fz/library/debit?bookId=${book.id}'">+</span>
 			<div class="name">
 				${book.name }
-			</div>
-			<div class="buttons">
-				<span>+</span>
 			</div>
 		</div>
 	</c:forEach>
@@ -58,6 +60,8 @@
 		<c:if test="${page.number >= page.totalPages - 1 }">
 			<a>下一页</a>
 		</c:if>
+		<a href="/kemao_3_fz/library/debit/list" style="float: right;">借阅列表</a>
+	</div>
 	</div>
 </body>
 </html>

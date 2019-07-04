@@ -1,0 +1,26 @@
+#box{
+	width:600px;
+	height:900px;
+	margin:0px auto;
+	border: 1px solid #eee;
+}
+.item {
+	padding: 0px;
+	height:130px;
+}
+
+.item:hover {
+	background-color: rgba(100, 100, 100, 0.3);
+}
+
+.item img {
+	display: inline;
+	height: 50px;
+}
+
+.item .name {
+	display: inline;
+}
+.item:hover{
+		background-color: #aaa;
+	}
