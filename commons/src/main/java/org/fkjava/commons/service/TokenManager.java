@@ -85,7 +85,7 @@ public class TokenManager {
 	public AccessToken getRemoteToken() {
 		// 在微信的公众号没有认证通过之前，先使用开发者工具里面的测试号来进行测试
 		String appId = "wxfbe4d402fd892349";
-		String appSecret = "ad91eb3762d1336c39a417173bc47aba";
+		String appSecret = "158c9560755260fcfbe66e5ac007ce60";
 		String url = "https://api.weixin.qq.com/cgi-bin/token"//
 				+ "?grant_type=client_credential"//
 				+ "&appid=" + appId//
