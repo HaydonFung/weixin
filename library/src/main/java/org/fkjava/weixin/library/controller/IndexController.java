@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/kemao_3_fz_library_index")
+@RequestMapping("/kemao_3_fz/library/index")
 public class IndexController {
 
 	@Autowired
