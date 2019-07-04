@@ -7,7 +7,8 @@
 		<artifactId>weixin</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>self-menu</artifactId>
+	<artifactId>library</artifactId>
+
 
 	<dependencies>
 
@@ -65,11 +66,11 @@
 		</dependency>
 
 		<!-- 引入jQuery库 -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.webjars</groupId> -->
-<!-- 			<artifactId>jquery</artifactId> -->
-<!-- 			<version>3.4.1</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.webjars</groupId> -->
+		<!-- <artifactId>jquery</artifactId> -->
+		<!-- <version>3.4.1</version> -->
+		<!-- </dependency> -->
 		<!-- 加入Servlet API的依赖 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -86,7 +87,7 @@
 			<!-- 如果在mvn命令直接运行，该依赖也会加入类路径 -->
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- 加入JSTL的依赖 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
